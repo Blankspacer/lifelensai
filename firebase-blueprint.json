@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role and subscription status",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "subscriptionStatus": { "type": "string", "enum": ["free", "pending", "active", "expired"] },
+        "packagePlan": { "type": "string", "enum": ["free", "pro_monthly", "family_monthly"] },
+        "subscriptionExpiresAt": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role", "subscriptionStatus"]
+    },
+    "SubscriptionRequest": {
+      "title": "SubscriptionRequest",
+      "description": "Payment submission for manual MFS or Cash verification by admin",
+      "type": "object",
+      "properties": {
+        "requestId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "packagePlan": { "type": "string", "enum": ["pro_monthly", "family_monthly"] },
+        "packageName": { "type": "string" },
+        "amountBDT": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["bkash", "nagad", "rocket", "upay", "cash"] },
+        "senderPhone": { "type": "string" },
+        "trxId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "adminNotes": { "type": "string" },
+        "approvedBy": { "type": "string" },
+        "approvedAt": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["requestId", "userId", "userEmail", "packagePlan", "paymentMethod", "trxId", "status"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "List of authorized administrator UIDs",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "role": { "type": "string" }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles with subscription status"
+    },
+    "/subscription_requests/{requestId}": {
+      "schema": { "$ref": "#/entities/SubscriptionRequest" },
+      "description": "MFS and cash subscription payment verification requests"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "Administrator records"
+    }
+  }
+}

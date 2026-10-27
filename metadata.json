@@ -1,0 +1,6 @@
+{
+  "name": "LifeLens AI",
+  "description": "Camera-first AI app to understand anything you receive in daily life: confusing bills, product labels, legal documents, messages, and instructions.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
